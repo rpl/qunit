@@ -90,6 +90,20 @@ var QUnit = {
 		}
 
 		synchronize(function() {
+                        // NOTE: create a div to display current running test
+		        var div = null;
+		        if(id("qunit-current-test")) {
+			    var div = id("qunit-current-test");
+			}
+		        else {
+		            var div = document.createElement("div");
+		            div.setAttribute("id", "qunit-current-test");
+  	                    id("qunit-tests").insertBefore( div, id("qunit-tests").firstChild);
+			}
+
+			div.innerHTML = "STARTING: "+testName+"...";
+		        // NOTE END
+
 			QUnit.testStart( testName );
 
 			testEnvironment = extend({
@@ -544,6 +558,9 @@ function done() {
 
 		result.innerHTML = html;
 	}
+
+        // NOTE: display TEST COMPLETED message
+        id("qunit-current-test").innerHTML = "TEST COMPLETED";
 
 	QUnit.done( config.stats.bad, config.stats.all );
 }
